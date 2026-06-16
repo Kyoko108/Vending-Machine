@@ -59,7 +59,8 @@ The controller tracks the accumulated amount using FSM states and dispenses the 
 ---
 
 ## State Diagram
-<img width="1254" height="1254" alt="image" src="https://github.com/user-attachments/assets/76f12da7-a566-468b-a683-0b2df4785681" />
+<img width="1254" height="1254" alt="image" src="https://github.com/user-attachments/assets/52cc5e00-d39d-4668-9e06-899767b0c215" />
+
 
 
 ---
@@ -188,6 +189,7 @@ Change Returned
 ---
 
 ## Below is the Output 
+<img width="883" height="438" alt="image" src="https://github.com/user-attachments/assets/7bdee3d6-cbc0-4422-8201-43ca08a66438" />
 
 
 [ Add image here ]
