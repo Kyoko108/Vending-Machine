@@ -9,13 +9,14 @@ module vending_machine(
     output reg change
 );
 
-parameter S0  = 2'b00;
-parameter S5  = 2'b01;
-parameter S10 = 2'b10;
-parameter S15 = 2'b11;
+parameter S0  = 3'b000;
+parameter S5  = 3'b001;
+parameter S10 = 3'b010;
+parameter S15 = 3'b011;
+parameter S20 = 3'b100;
 
-reg [1:0] state;
-reg [1:0] next_state;
+reg [2:0] state;
+reg [2:0] next_state;
 
 // State Register
 always @(posedge clk or posedge rst)
@@ -53,8 +54,10 @@ begin
 
         S10:
         begin
-            if (coin5 || coin10)
+            if (coin5)
                 next_state = S15;
+            else if (coin10)
+                next_state = S20;
             else
                 next_state = S10;
         end
@@ -79,11 +82,16 @@ begin
         S15:
         begin
             dispense = 1;
-
-            if (coin10)
-                change = 1;
+            change   = 0;
+            /*if (coin10)
+                change = 1;*/
         end
 
+        S20:
+        begin
+            dispense = 1;
+            change   = 1;
+        end
     endcase
 end
 
