@@ -18,6 +18,7 @@ The controller tracks the accumulated amount using FSM states and dispenses the 
 * FSM-based design
 * Accepts ₹5 and ₹10 coins
 * Dispenses product when ₹15 is accumulated
+* Returns change on overpayment (₹20 case)
 * Includes simulation testbench
 * Generates waveform output for verification using GTKWave
 
@@ -49,12 +50,13 @@ The controller tracks the accumulated amount using FSM states and dispenses the 
 
 ## FSM States
 
-| State | Amount Stored          |
-| ----- | ---------------------- |
-| S0    | ₹0                     |
-| S5    | ₹5                     |
-| S10   | ₹10                    |
-| S15   | ₹15 (Dispense Product) |
+| State | Amount Stored                     |
+| ----- | --------------------------------- |
+| S0    | ₹0                                |
+| S5    | ₹5                                |
+| S10   | ₹10                               |
+| S15   | ₹15 (Dispense Product ,no change) |
+| S20   | ₹20 (Dispense + Change)           |
 
 ---
 
@@ -87,16 +89,17 @@ Vending_Machine_Controller/
 ## State Transitions
 
 ```text
-S0  --₹5-->  S5
-S0  --₹10--> S10
+S0 --₹5--> S5
+S0 --₹10--> S10
 
-S5  --₹5-->  S10
-S5  --₹10--> S15
+S5 --₹5--> S10
+S5 --₹10--> S15
 
-S10 --₹5-->  S15
-S10 --₹10--> S15
+S10 --₹5--> S15
+S10 --₹10--> S20
 
 S15 --------> S0
+S20 --------> S0
 ```
 
 ---
@@ -125,7 +128,7 @@ gtkwave vending_machine.vcd
 
 ## Test Scenario
 
-### Test Case 1
+### Test Case 1 — Exact Payment
 
 ```text
 Insert ₹5
@@ -140,7 +143,7 @@ Product Dispensed
 
 ---
 
-### Test Case 2
+### Test Case 2 — Overpayment
 
 ```text
 Insert ₹10
@@ -153,6 +156,18 @@ Expected Result:
 Product Dispensed
 Change Returned
 ```
+
+---
+
+## Bugs Found & Fixed
+
+While verifying the design against Test Case 2 (₹10 + ₹10), a few issues surfaced during debugging:
+
+1. **State register width truncation** — `state`/`next_state` were declared as `[1:0]` (2 bits), which could only represent 4 states. Adding a 5th state (`S20`) silently truncated it to `S0` at the register level, even though the parameter itself was defined correctly. Fixed by widening both to `[2:0]`.
+2. **Missing hold-state transition** — the `S10` state had no explicit "no coin inserted" branch holding at `S10`; it defaulted to `S0`, silently discarding the first ₹10 coin if there was any gap before the second coin arrived. Fixed by adding an explicit self-loop.
+3. **Change output tied to a live input signal instead of state** — the original output logic checked `if (coin10)` to decide whether to assert `change`, rather than deriving it purely from the current state. This made the output timing-dependent and could misfire depending on how long the coin signal stayed asserted. Fixed by deriving `change` purely from `state == S20`.
+
+This was a good reminder that FSM outputs should always be a pure function of state, not of transient input timing.
 
 ---
 
