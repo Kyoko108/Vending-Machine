@@ -1,0 +1,5 @@
+   # Simulation outputs
+   sim
+   *.vcd
+   *.exe
+   *.vvp
