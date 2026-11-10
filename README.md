@@ -59,9 +59,13 @@ S15 ------------> S0   (unconditional)
 S20 ------------> S0   (unconditional)
 ```
 
-<!-- Paste your existing State Diagram and FSM Architecture images here. -->
-<!-- ![State diagram](docs/state_diagram.png) -->
-<!-- ![FSM architecture](docs/fsm_architecture.png) -->
+### State diagram
+
+![State diagram](https://github.com/user-attachments/assets/52cc5e00-d39d-4668-9e06-899767b0c215)
+
+### FSM architecture
+
+![FSM architecture](https://github.com/user-attachments/assets/ed19b921-5349-41c9-b6da-0f74e79c0d9f)
 
 ### Design decisions and limitations
 
@@ -139,7 +143,9 @@ PASS  held 10 x3 cycles = one coin
 RESULT: PASS
 ```
 
-<!-- Optional: add waveform screenshot, e.g. ![Waveform](docs/waveform.png) -->
+### Simulation output
+
+![Simulation output](https://github.com/user-attachments/assets/798ce625-675e-43e4-96c0-65f43cb17707)
 
 ---
 
