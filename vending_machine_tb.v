@@ -81,7 +81,8 @@ initial begin
 
 `ifdef HELD_COIN
     // Spec decision: a coin line held high for several cycles is ONE coin.
-    // Expected to FAIL unless the DUT has input edge detection.
+    // A coin line held high for several cycles must count as ONE coin.
+    // Compile with -DHELD_COIN to include these tests.
     do_reset; ins5(3,1);                           check(0,0,"held 5 x3 cycles = one coin");
     do_reset; ins10(3,1);                          check(0,0,"held 10 x3 cycles = one coin");
 `endif
