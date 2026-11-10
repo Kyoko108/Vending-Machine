@@ -126,26 +126,14 @@ gtkwave vending_machine.vcd
 
 ### Results
 
-```
-PASS  5+10
-PASS  10+5
-PASS  5+5+5
-PASS  10+10 (change)
-PASS  5+5+10 (change)
-PASS  5 then 10 back-to-back
-PASS  10, long gap, 5 (hold state)
-PASS  10, long gap, 10 (hold state)
-PASS  5 only, no dispense
-PASS  mid-transaction reset
-PASS  held 5 x3 cycles = one coin
-PASS  held 10 x3 cycles = one coin
----- 12 tests, 0 failed ----
-RESULT: PASS
-```
+Basic tests (1-10):
 
-### Simulation output
+<!-- DRAG screenshot 1 (10 tests pass) onto this line in the GitHub editor, then delete this comment -->
 
-![Simulation output](https://github.com/user-attachments/assets/798ce625-675e-43e4-96c0-65f43cb17707)
+All tests including held-coin (1-12):
+
+<!-- DRAG screenshot 2 (12 tests pass) onto this line in the GitHub editor, then delete this comment -->
+
 
 ---
 
